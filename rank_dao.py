@@ -22,7 +22,7 @@ def find_all():
     player_ranking=[]
     with connect() as con:
         with con.cursor() as cursor:
-            sql = 'SELECT * FROM ranking ORDER BY crear_time ASC,date DESC'
+            sql = 'SELECT * FROM ranking ORDER BY clear_time ASC,updated DESC'
             cursor.execute(sql)
             rs = cursor.fetchall()
 

@@ -18,11 +18,11 @@ answers = [ # 回答一覧
     '日暮里駅','西日暮里駅','田端駅','駒込駅','巣鴨駅','大塚駅 (東京都)',
     '池袋駅','目白駅','高田馬場駅','新大久保駅','新宿駅','代々木駅','原宿駅',
     '渋谷駅','恵比寿駅','目黒駅','五反田駅','大崎駅','品川駅','高輪ゲートウェイ駅',
-    '田町駅','浜松町駅','新橋駅','有楽町駅',]
+    '田町駅','浜松町駅','新橋駅','有楽町駅'],
 ]
 
 cate = [
-    '山手線の駅'
+    '山手線の駅',
 ] # 出題カテゴリ
 cate_num = 0 # 選択されたカテゴリ
 num = 0 # 問題番号
@@ -91,7 +91,7 @@ def btn_click():
 # 「ランキングに登録」ボタン
 def rank_entry():
     global cate_num,cate,clear_time,rank_window,clear_time_str,entry_name
-    messagebox.showinfo('お詫び','この機能はまだ実装されていません')
+    messagebox.showinfo('お詫び','この機能はまだ正規実装ではありません')
     # 登録画面表示
     rank_window = tk.Toplevel(root)
     # 親ウィンドウを非アクティブに
@@ -103,7 +103,7 @@ def rank_entry():
     label_name=tk.Label(rank_window,text='Player Name',font=('Arial',12,'bold'),anchor=tk.CENTER)
     label_name.grid(row=1,column=0)
     entry_name=tk.Entry(rank_window,font=('Arial',12),justify="center",width=32)
-    entry_name.insert(tk.END,'16文字以内')
+    entry_name.insert(tk.END,'16文字以内で入力')
     entry_name.grid(row=1,column=1)
     entry_name.focus_set()
     label_category=tk.Label(rank_window,text='Category',font=('Arial',12,'bold'),anchor=tk.CENTER)
@@ -126,6 +126,41 @@ def rank_entry_btn():
         rank_window.destroy()
         game_main()
 
+def ranking():
+    global cate
+    messagebox.showinfo('お詫び','この機能はまだ正規実装ではありません')
+    # 登録画面表示
+    show_rank = tk.Toplevel(root)
+    # 親ウィンドウを非アクティブに
+    show_rank.grab_set()
+    # 登録画面をアクティブに
+    show_rank.focus_set()
+    rank_data=rank_dao.find_all()
+    rank_label=tk.Label(show_rank,text='ランキング',font=('Arial',12),anchor=tk.CENTER)
+    #rank_label.grid(row=0,column=0,columnspan=0)
+    rank_num=0
+    label_header=tk.Label(show_rank,text='',font=('Arial',12),anchor=tk.CENTER)
+    label_header.grid(row=1,column=0)
+    label_header_name=tk.Label(show_rank,text='Player Name',font=('Arial',12),anchor=tk.CENTER)
+    label_header_name.grid(row=1,column=1)
+    label_header_category=tk.Label(show_rank,text='Category',font=('Arial',12),anchor=tk.CENTER)
+    label_header_category.grid(row=1,column=2)
+    label_header_clearTime=tk.Label(show_rank,text='Clear Time',font=('Arial',12),anchor=tk.CENTER)
+    label_header_clearTime.grid(row=1,column=3)
+    label_header_date=tk.Label(show_rank,text='Date',font=('Arial',12),anchor=tk.CENTER)
+    label_header_date.grid(row=1,column=4)
+    for data in rank_data:
+        rank_num+=1
+        label_rank=tk.Label(show_rank,text=f'{rank_num}',font=('Arial',12),anchor=tk.CENTER)
+        label_rank.grid(row=rank_num+1,column=0)
+        label_name=tk.Label(show_rank,text=f'{data.player_name}',font=('Arial',12),anchor=tk.CENTER)
+        label_name.grid(row=rank_num+1,column=1)
+        label_cate=tk.Label(show_rank,text=f'{cate[data.category]}',font=('Arial',12),anchor=tk.CENTER)
+        label_cate.grid(row=rank_num+1,column=2)
+        label_time=tk.Label(show_rank,text=f'{data.clear_time}',font=('Arial',12),anchor=tk.CENTER)
+        label_time.grid(row=rank_num+1,column=3)
+        label_date=tk.Label(show_rank,text=f'{data.updated}',font=('Arial',12),anchor=tk.CENTER)
+        label_time.grid(row=rank_num+1,column=4)
 
 # スタート画面
 def game_main():
@@ -139,6 +174,8 @@ def game_main():
     que.insert(1.0,"WikiQuizは、Wikpediaの本文だけをみて、ページタイトルを当てるクイズです。\n\n\n本文中に、解答と全く同じ文字列が含まれる場合は「☆☆☆」に置き換わりますが、漢字/ひらがな/カタカナ/ローマ字など表記が異なる場合や、解答となるページタイトルが「大塚駅 (東京都)」のように重複を避けるための追記がある場合などは置き換わりません。\nただし、ページタイトルの最後につく「駅」「県」などの接尾語は無視されるため、「東京駅」本文内の「東京」というワードは置き換わります。\n\nまた、画像や図は表示されません。\n\nタイトルを特定できる情報を素早く見つけて正しい答えを選択し、5問正解したらクリアです\n\n\n準備ができたら、出題カテゴリを選択し【スタート】ボタンをクリックしてください。")
     s_btn=tk.Button(text='スタート',font=('Arial',14,'bold'),fg='red',bg='mistyrose',command=game_start)
     s_btn.pack()
+    r_btn=tk.Button(text='ランキング',font=('Arial',14,'bold'),fg='gold',bg='lemonchiffon',command=ranking)
+    r_btn.pack()
 
 # クイズ中の画面表示物を生成+タイマースタート
 def game_start():
