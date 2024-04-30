@@ -20,6 +20,10 @@ answers = [ # 回答一覧
     '池袋駅','目白駅','高田馬場駅','新大久保駅','新宿駅','代々木駅','原宿駅',
     '渋谷駅','恵比寿駅','目黒駅','五反田駅','大崎駅','品川駅','高輪ゲートウェイ駅',
     '田町駅','浜松町駅','新橋駅','有楽町駅'],
+    ['ゼルダの伝説 ティアーズ オブ ザ キングダム','スーパーマリオブラザーズ ワンダー',
+     'ピクミン4','ポケットモンスター スカーレット・バイオレット','桃太郎電鉄ワールド 〜地球は希望でまわってる!〜',
+     'マリオカート8 デラックス','星のカービィ Wii デラックス','ドラゴンクエストモンスターズ3 魔族の王子とエルフの旅',
+     'スプラトゥーン3','スーパーマリオRPG'],
     ['Mrs. GREEN APPLE','Vaundy','YOASOBI','back number','Official髭男dism',
      'BTS (音楽グループ)','優里','米津玄師','Ado','あいみょん'],
     ['呪術廻戦','ONE PIECE','SPY×FAMILY','東京卍リベンジャーズ','僕のヒーローアカデミア',
@@ -27,7 +31,7 @@ answers = [ # 回答一覧
 ]
 
 cate = [
-    '山手線の駅','2023年Spotify Japanで最も再生されたアーティストTOP10',
+    '山手線の駅','2023年家庭用ゲームソフト販売本数TOP10','2023年Spotify Japanで最も再生されたアーティストTOP10',
     '2023年コミック年間ベストセラーTOP10(日販調べ)',
 ] # 出題カテゴリ
 cate_num = 0 # 選択されたカテゴリ
@@ -150,27 +154,27 @@ def ranking():
     rank_label=tk.Label(show_rank,text='ランキング',font=('メイリオ',12,'bold'),anchor=tk.CENTER)
     #rank_label.grid(row=0,column=0,columnspan=0)
     rank_num=0
-    label_header=tk.Label(show_rank,text='Rank',font=('Arial',12,'bold'),anchor=tk.CENTER)
+    label_header=tk.Label(show_rank,text='Rank',font=('Arial',12,'bold'),anchor=tk.CENTER,fg='white',bg='seagreen')
     label_header.grid(row=1,column=0)
-    label_header_name=tk.Label(show_rank,text='Player Name',font=('Arial',12,'bold'),anchor=tk.CENTER)
+    label_header_name=tk.Label(show_rank,text='Player Name',font=('Arial',12,'bold'),anchor=tk.CENTER,width=32,fg='white',bg='seagreen')
     label_header_name.grid(row=1,column=1)
-    label_header_category=tk.Label(show_rank,text='Category',font=('Arial',12,'bold'),anchor=tk.CENTER)
+    label_header_category=tk.Label(show_rank,text='Category',font=('Arial',12,'bold'),anchor=tk.CENTER,width=40,fg='white',bg='seagreen')
     label_header_category.grid(row=1,column=2)
-    label_header_clearTime=tk.Label(show_rank,text='Clear Time',font=('Arial',12,'bold'),anchor=tk.CENTER)
+    label_header_clearTime=tk.Label(show_rank,text='Clear Time',font=('Arial',12,'bold'),anchor=tk.CENTER,fg='white',bg='seagreen')
     label_header_clearTime.grid(row=1,column=3)
-    label_header_date=tk.Label(show_rank,text='Entry Date',font=('Arial',12,'bold'),anchor=tk.CENTER)
+    label_header_date=tk.Label(show_rank,text='Entry Date',font=('Arial',12,'bold'),anchor=tk.CENTER,width=20,fg='white',bg='seagreen')
     label_header_date.grid(row=1,column=4)
     for data in rank_data:
         rank_num+=1
         label_rank=tk.Label(show_rank,text=f'{rank_num}',font=('Arial',12),anchor=tk.CENTER)
         label_rank.grid(row=rank_num+1,column=0)
-        label_name=tk.Label(show_rank,text=f'{data.player_name}',font=('Arial',12),anchor=tk.CENTER)
+        label_name=tk.Label(show_rank,text=f'{data.player_name}',font=('Arial',12),anchor=tk.CENTER,width=32)
         label_name.grid(row=rank_num+1,column=1)
-        label_cate=tk.Label(show_rank,text=f'{cate[data.category]}',font=('Arial',12),anchor=tk.CENTER)
+        label_cate=tk.Label(show_rank,text=f'{cate[data.category][:30]}{"..." if len(cate[data.category])>30 else ""}',font=('Arial',12),anchor=tk.CENTER,width=40)
         label_cate.grid(row=rank_num+1,column=2)
         label_time=tk.Label(show_rank,text=f'{data.clear_time}',font=('Arial',12),anchor=tk.CENTER)
         label_time.grid(row=rank_num+1,column=3)
-        label_date=tk.Label(show_rank,text=f'{data.updated}',font=('Arial',12),anchor=tk.CENTER)
+        label_date=tk.Label(show_rank,text=f'{data.updated}',font=('Arial',12),anchor=tk.CENTER,width=20)
         label_date.grid(row=rank_num+1,column=4)
 
 # スタート画面
@@ -182,7 +186,8 @@ def game_main():
         rank_btn.destroy()
         l_result.destroy()
     index=0
-    que.insert(1.0,"WikiQuizは、Wikpediaの本文だけをみて、ページタイトルを当てるクイズです。\n\n\n本文中に、解答と全く同じ文字列が含まれる場合は「☆☆☆」に置き換わりますが、漢字/ひらがな/カタカナ/ローマ字など表記が異なる場合や、解答となるページタイトルが「大塚駅 (東京都)」のように重複を避けるための追記がある場合などは置き換わりません。\nただし、ページタイトルの最後につく「駅」「県」などの接尾語は無視されるため、「東京駅」本文内の「東京」というワードは置き換わります。\n\nまた、画像や図は表示されません。\n\nタイトルを特定できる情報を素早く見つけて正しい答えを選択し、5問正解したらクリアです\n\n\n準備ができたら、出題カテゴリを選択し【スタート】ボタンをクリックしてください。")
+    correct==0
+    que.insert(1.0,"WikiQuizは、Wikpediaの本文だけをみて、ページタイトルを当てるクイズです。\n\n\n本文中に、解答と全く同じ文字列が含まれる場合は「☆☆☆」に置き換わりますが、漢字/ひらがな/カタカナ/ローマ字など表記が異なる場合は置き換わりません。\n\nまた、画像や図は表示されません。\n語句によては、リダイレクト先の記事や一覧記事が表示される場合もあります。\n\nタイトルを特定できる情報を素早く見つけて正しい答えを選択し、5問正解したらクリアです\n\n\n準備ができたら、出題カテゴリを選択し【スタート】ボタンをクリックしてください。")
     s_btn=tk.Button(text='スタート',font=('メイリオ',14,'bold'),fg='red',bg='mistyrose',command=game_start)
     s_btn.pack()
     r_btn=tk.Button(text='ランキング',font=('メイリオ',14,'bold'),fg='gold',bg='lemonchiffon',command=ranking)
@@ -192,11 +197,12 @@ def game_main():
 def game_start():
     global correct,r,index,answers,num,s,s_btn,start_time,combo,l_result,btn,category_combo,cate_num,r_btn
     index = 1
+    correct==0
     s_btn.destroy()
     r_btn.destroy()
     cate_num=category_combo.current()
     que.insert(1.0,r)
-    combo=ttk.Combobox(root,values=answers[cate_num],font=('Arial',14),justify="center",state="readonly")
+    combo=ttk.Combobox(root,values=answers[cate_num],font=('HGｺﾞｼｯｸM',12),justify="center",state="readonly",width=40)
     combo.set("答えを選択")
     combo.pack()
     btn=tk.Button(text='答える',font=('メイリオ',14,'bold'),fg='red',bg='mistyrose',command=btn_click)
@@ -214,11 +220,11 @@ frame1 = tk.Frame(root)
 frame1.pack(anchor=tk.CENTER)
 category=tk.Label(frame1,text='出題カテゴリ：',font=('メイリオ',12))
 category.pack(side=tk.LEFT)
-category_combo=ttk.Combobox(frame1,values=cate,font=('Arial',14),justify="center",state="readonly",width=40)
+category_combo=ttk.Combobox(frame1,values=cate,font=('Arial',12),justify="center",state="readonly",width=50)
 category_combo.current(0)
 category_combo.pack(side=tk.LEFT)
 que = tk.Text(background='lightblue')
-que.pack(fill=tk.X)
+que.pack(fill=tk.BOTH)
 """
 #que.insert(1.0,r)
 que.pack()
