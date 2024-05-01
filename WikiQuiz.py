@@ -183,7 +183,7 @@ def ranking():
 
 # スタート画面
 def game_main():
-    global correct,r,index,answers,num,s_btn,re_btn,rank_btn,r_btn
+    global correct,r,index,answers,num,s_btn,re_btn,rank_btn,r_btn,category_combo
     if index==2:
         que.delete(0.,tk.END)
         re_btn.destroy()
@@ -191,7 +191,7 @@ def game_main():
         l_result.destroy()
     index=0
     correct=0
-    que.insert(1.0,"WikiQuizは、Wikpediaの本文だけをみて、ページタイトルを当てるクイズです。\n\n\n本文中に、解答と全く同じ文字列が含まれる場合は「☆☆☆」に置き換わりますが、漢字/ひらがな/カタカナ/ローマ字など表記が異なる場合は置き換わりません。\n\nまた、画像や図は表示されません。\n語句によては、リダイレクト先の記事や一覧記事が表示される場合もあります。\n\nタイトルを特定できる情報を素早く見つけて正しい答えを選択し、5問正解したらクリアです\n\n\n準備ができたら、出題カテゴリを選択し【スタート】ボタンをクリックしてください。")
+    que.insert(1.0,"WikiQuizは、Wikpediaの本文だけをみて、ページタイトルを当てるクイズです。\n\n\n本文中に、解答と全く同じ文字列が含まれる場合は「☆☆☆」に置き換わりますが、漢字/ひらがな/カタカナ/ローマ字など表記が異なる場合は置き換わりません。\n\nまた、画像や図は表示されません。\n語句によては、リダイレクト先の記事や一覧記事が表示される場合もあります。\n\nタイトルを特定できる情報を素早く見つけて正しい答えを選択し、同じ出題カテゴリで5問正解したらクリアです\n\n\n準備ができたら、出題カテゴリを選択し【スタート】ボタンをクリックしてください。")
     s_btn=tk.Button(text='スタート',font=('メイリオ',14,'bold'),fg='red',bg='mistyrose',command=game_start)
     s_btn.pack()
     r_btn=tk.Button(text='ランキング',font=('メイリオ',14,'bold'),fg='gold',bg='lemonchiffon',command=ranking)
@@ -224,7 +224,7 @@ frame1 = tk.Frame(root)
 frame1.pack(anchor=tk.CENTER)
 category=tk.Label(frame1,text='出題カテゴリ：',font=('メイリオ',12))
 category.pack(side=tk.LEFT)
-category_combo=ttk.Combobox(frame1,values=cate,font=('Arial',12),justify="center",state="readonly",width=50)
+category_combo=ttk.Combobox(frame1,values=cate,font=('Arial',12),justify="center",state="readonly" if index!=0 else "disabled",width=50,)
 category_combo.current(0)
 category_combo.pack(side=tk.LEFT)
 que = tk.Text(background='lightblue')
