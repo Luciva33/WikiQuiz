@@ -18,22 +18,18 @@ def search():
     city = city_entry.get()
     get_weather(city)
 
-# GUIのセットアップ
 root = tk.Tk()
 root.title("get_weather App")
 
-# 入力フィールド
 city_label = tk.Label(root, text="都市名をローマ字で入力: ")
 city_label.pack()
 
 city_entry = tk.Entry(root)
 city_entry.pack()
 
-# 検索ボタン
 search_button = tk.Button(root, text="天気を表示", command=search)
 search_button.pack()
 
-# 天気情報表示エリア
 result_label = tk.Label(root, text="")
 result_label.pack()
 
