@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import ttk,messagebox
 import time
 import rank_dao
-import copy
 
 wikipedia.set_lang("ja") # 日本語版Wikipediaをセット
 correct=0 # 正解数
@@ -186,7 +185,7 @@ def game_main():
         rank_btn.destroy()
         l_result.destroy()
     index=0
-    correct==0
+    correct=0
     que.insert(1.0,"WikiQuizは、Wikpediaの本文だけをみて、ページタイトルを当てるクイズです。\n\n\n本文中に、解答と全く同じ文字列が含まれる場合は「☆☆☆」に置き換わりますが、漢字/ひらがな/カタカナ/ローマ字など表記が異なる場合は置き換わりません。\n\nまた、画像や図は表示されません。\n語句によては、リダイレクト先の記事や一覧記事が表示される場合もあります。\n\nタイトルを特定できる情報を素早く見つけて正しい答えを選択し、5問正解したらクリアです\n\n\n準備ができたら、出題カテゴリを選択し【スタート】ボタンをクリックしてください。")
     s_btn=tk.Button(text='スタート',font=('メイリオ',14,'bold'),fg='red',bg='mistyrose',command=game_start)
     s_btn.pack()
@@ -197,7 +196,7 @@ def game_main():
 def game_start():
     global correct,r,index,answers,num,s,s_btn,start_time,combo,l_result,btn,category_combo,cate_num,r_btn
     index = 1
-    correct==0
+    correct=0
     s_btn.destroy()
     r_btn.destroy()
     cate_num=category_combo.current()
